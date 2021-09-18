@@ -5,9 +5,20 @@ import axios from 'axios';
 function App() {
   const [message, setMessage] = useState('');
   const fetchData = async () => {
-    const results = await axios.get('/.netlify/functions/helloWorld');
-    setMessage(results.data.message);
-    console.log(results.data.message);
+    const config = {
+      headers: {
+        Accept: 'application/json',
+      },
+    };
+    const results = await fetch(`/.netlify/functions/helloWorld`, config);
+
+    const data = await results.json();
+
+    console.log(data[0].author);
+    setMessage(data[0].description);
+    // const results = await axios.get('/.netlify/functions/helloWorld');
+    // setMessage(results.data.message);
+    // console.log(results.data.message);
   };
 
   useEffect(() => {
